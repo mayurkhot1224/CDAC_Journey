@@ -1,0 +1,116 @@
+1. Revise JDBC steps
+
+2. Continue with Layered application, to complete CRUD n stored procedure
+Layers involved
+Tester(for UI n Managing DAO layer)
+DAO layer (i/f n implementation class)
+DB Utils
+POJO/Model/Entity
+DB layer
+
+
+Dev steps
+1.Create new java project with JDBC JAR
+2.Table : users
+3.pojos. User --obj representation of db data
+4. DBUtils
+4.1 public static Connection openConnection() throws SE
+4.2 public static void closeConnection() throws SE
+5. DAO layer
+5.1 i/f : dao.UserDao 
+method declarations for CRUD ops
+eg : Display user details for all users , under specific role , with reg amount > specified amount
+i/p : role , amount
+ List<User>   findUsersByRoleAndAmount(String role,double amount) throws SE
+5.2 DAO imple class
+dao.UserDaoImpl
+1. import pkg :  java.sql
+2. state : cn , psts(PreparedStatement)/csts(CallableStatement)
+3. def ctor : called by tester --exactly once ---init phase of app
+3.1 get db cn (calling DBUtils methods)
+3.2 create PSTs/ CSTs
+4. add a method to clean up DB resources ---called by tester --exactly once ---destroy phase of app
+close PSTs/ CSTs
+close cn. (DB Utils method)
+5. CRUD method implementation/s
+List<User>:   findUsersByRoleAndAmount(String role,double amount) throws SE
+empty List :  users,
+set IN params --exec query --RST --
+while(rst.next())
+ users.add(new User(.....));//ORM
+ret users;
+....
+
+6. Tester
+ main
+try(sc) {
+  create dao instance
+   while(!exit)
+   {
+      try {
+       switch-case ---invoke CRUD methods of the dao layer
+        exit : clen up dao
+      } catch-all -- sc.nextLine();
+   }
+} catch-all
+
+
+Next Objective :
+ Un subscribe user.
+i/p : user id
+
+1. UserDao i/f
+String  unsubscribeUser(int userId) throws SE,custom exc
+
+2. UserDaoImpl
+
+Next Objective :
+sign up : register new user
+
+Next Objective :
+change password
+email , password, new password
+---------------------
+Steps for invoking n executing a stored proc / function
+0. Create stored proc/func in DB
+1. Create CST(CallableStaement ) from Connection
+API of Connection i/f
+CST prepareCall(String invocationSyntax) throws SE
+invocationSyntax for a proc
+"{call proc_name(?,?,.....?)}"
+
+invocationSyntax for a func
+"{?=call func_name(?,?,.....?)}"
+
+{} => esc sequence meant for JDBC driver , to translate proc/func invocation as per native DB syntax.
+2. Register OUT / IN OUT parameter before executing the stored proc/func
+(can be done exactly once)
+(Meaning : inform the JVM about JDBC data types of the OUT or IN OUT params)
+API of CST
+public void registerOutParameter(int paramIndex,int jdbcType) throws SQLException
+For 2nd arg : jdbc type (Use java.sql.Types class constants)
+
+3. Set IN params : must be called per request
+Inherited from PST
+public void setType(int paramIndex,Type val) throws SQLException
+
+4. Execute stored proc/func
+API of CST
+public boolean execute() throws SE
+ret value is not used here.
+
+5. Get results stored in OUT / IN OUT params
+API of CST
+public Type getType(int paramIndex) throws SE
+
+
+3. Discuss voting assignment(Optional lab work)
+
+4. Reflection overview
+Just supplied the introduction n overview with simple code example
+Refer : to it's readme n readymade code samples
+eclipse project : test_reflection
+
+------------------PENDING-----------------------
+
+5. Cloning in Java

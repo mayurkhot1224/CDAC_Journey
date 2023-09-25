@@ -1,0 +1,57 @@
+Hashing observations (ref : day7.1)
+(equal objs ARE producing same hashcode=100) : only MANDATORY part of the contract
+obj : detecting dups BUT not ensuring const time perf : O(n)
+in emp hashCode
+Added true
+in emp hashCode
+in emp eq
+Added true
+in emp hashCode
+in emp eq
+Added false
+in emp hashCode
+in emp eq
+in emp eq
+Added true
+in emp hashCode
+in emp eq
+in emp eq
+in emp eq
+Added true
+in emp hashCode
+in emp eq
+in emp eq
+in emp eq
+in emp eq
+Added true
+size 5
+Emp [id=rnd-001, name=Riya, salary=10000.0]
+Emp [id=rnd-003, name=Rakesh, salary=20000.0]
+Emp [id=rnd-004, name=Riya, salary=10000.0]
+Emp [id=rnd-002, name=Rakesh, salary=20000.0]
+Emp [id=rnd-008, name=Riya, salary=10000.0]
+-----------------------------------
+Hashing observations (ref : day7.2)
+(equal objs ARE producing same hashcode n un equal objs are producing different hascodes) : MANDATORY n optional part of the contract is followed
+obj : detecting dups and also  ensuring const time perf : O(1)
+in emp hashCode
+Added true
+in emp hashCode
+Added true
+in emp hashCode
+in emp eq
+Added false
+in emp hashCode
+Added true
+in emp hashCode
+Added true
+in emp hashCode
+Added true
+size 5
+Emp [id=rnd-008, name=Riya, salary=10000.0]
+Emp [id=rnd-002, name=Rakesh, salary=20000.0]
+Emp [id=rnd-001, name=Riya, salary=10000.0]
+Emp [id=rnd-004, name=Riya, salary=10000.0]
+Emp [id=rnd-003, name=Rakesh, salary=20000.0]
+----------------------
+

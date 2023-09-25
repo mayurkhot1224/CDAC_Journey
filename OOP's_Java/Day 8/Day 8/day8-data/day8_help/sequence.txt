@@ -1,0 +1,93 @@
+Revision :
+
+Hashing Algorithm
+
+
+Today's topics
+
+Start with a fresh scenario
+Banking System
+BankAccount : acctNo, customer name , type , balance , creation date , last tx date , isActive
+Ctor , toString : for acct summary
+withdraw , deposit, funds transfer
+
+Business  Rules 
+min balance condition
+valid acct type 
+In case of no txs (withdraw , deposit, funds transfer) , in 1 year ,  disable a/c status
+
+
+
+1. HashMap CRUD operations
+Pending !!!!!!!!!!!!!!!!
+2. Sorting of HashMap : TreeMap
+
+
+1. Sort these a/c details in asc order as per acct nos
+
+2. Sort these a/c details in desc order as per acct nos
+
+3. Sort these a/c details in asc order as per acct balance
+
+
+3. Generic Syntax
+Solve : 
+Refer to Emp inheritance hierarchy
+Emp e=new Mgr(....);
+e=new Worker(..);
+e=new SalesMgr(...);// up casting
+e.computeSalary();//run time poly.
+
+List<Emp> emps;
+emps=new AL<Emp>();
+AL<Mgr> mgrs=new AL<>(); mgrs.add(m1).....m10
+
+emps=mgrs;//no err ---ERROR!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+More keywords ? extends super
+
+
+
+
+
+
+
+Refer to generic sequence
+
+Solve : 
+Create GenericUtils class --static methods
+1. Add a method to print any element from any of the following
+ Test cases : AL<String> , LL<Integer> , Vector<LocalDate> , HS<Double> , LHS,TS
+1.1 Using T : generic method
+1.2 Using ? : un bounded wild card
+
+
+
+	
+2. Add a method to find sum of salary of emps from any List 
+Test cases : AL<Mgr> ,LL<Worker> , Vector<SM> ....
+
+----------------Pending-------------------
+	
+3. Add a method to hire a sales mgr to the list
+What should be the type of the List ?
+
+4. Add a method to hire a temp worker to the list
+What should be the type of the List ?
+
+
+Functional programming in Java
+
+	
+

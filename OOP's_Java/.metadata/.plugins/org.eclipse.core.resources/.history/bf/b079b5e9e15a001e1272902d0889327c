@@ -1,0 +1,19 @@
+package func_strms;
+
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
+public class Test4 {
+
+	public static void main(String[] args) {
+		// Create stream of ints between 1-100 & display all even elements.
+		Scanner sc=new Scanner(System.in);
+		int a=sc.nextInt();
+		int b=sc.nextInt();
+		IntStream.range(a, b) // IntStream : 1--100
+				.filter(i -> i % 2 == 0)// IntStream : even ints
+				.forEach(i -> System.out.print(i + " "));
+
+	}
+
+}

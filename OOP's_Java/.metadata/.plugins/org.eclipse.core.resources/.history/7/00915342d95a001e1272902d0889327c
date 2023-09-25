@@ -1,0 +1,5 @@
+package char_io;
+
+public enum Category {
+	BREAD, BISCUITS, OIL, GRAIN, SPICES, FRUITS
+}

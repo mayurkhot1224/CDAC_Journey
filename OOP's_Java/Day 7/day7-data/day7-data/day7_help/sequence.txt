@@ -1,0 +1,106 @@
+Today's Topics
+LinkedList
+ArrayList Vs LinkedList
+Set interface & implementation classes
+Maps
+
+Revision
+Sorting in Java
+
+Which are 2 ways of sorting in Java ? 
+1. Natural Ordering (internal ordering) --sorting criteria is kept within UDT (type of collection)
+imple. Comparable<T> 
+public int compareTo(T o)
+Collections.sort(list);
+
+2. Custom Ordering (external) --orting criteria is kept outside of UDT
+3 ways : separate class / ano inner class /lambda expr.
+imple.java.util.Comparator<T> 
+public int compare(T o1,T o2)
+Collections.sort(list); //N.O (natural ordering)
+Collections.sort(list,null)//N.O
+Collections.sort(list,comp instance)
+
+Sorting elements in the List
+
+1. Sort customer details , as per email (asc)
+eg : public class Customer imple. Comparable<Customer>
+{
+public int compareTo(Customer anotherCustomer)
+{
+   return this.email.compareTo(anotherCustomer.email);
+}
+  
+} 
+
+
+2. Sort customer details , as per Dob (desc ) n last name ( custom ordering , using anonymous inner class)
+eg : Collections.sort(list,new Comparator<Customer>()
+{
+  @Override
+  public int compare(Customer c1,Customer c2)
+  {
+     int ret=c2.getDob().compareTo(c1.getDob());
+     if(ret==0)
+      return c1.getLastName().compareTo(c2.getLastName());
+	return ret;
+  }
+});
+
+
+Solve this (What will happen ?)
+1. List<Customer> list=new AL<>();
+list.add(c1);
+list.add(c2);
+list.add(c3);
+list.add(c4);
+Iterator<Customer> itr=list.iterator();
+itr.remove();//java.lang.IllegalStateExc
+
+2. List<Customer> list=new AL<>();
+list.add(c1);
+list.add(c2);
+list.add(c3);
+list.add(c4);
+Iterator<Customer> itr=list.iterator();
+list.add(c5);
+while(itr.hasNext())
+ sop(itr.next());//java.util.ConcModiExc
+
+3. Given :
+In Customer class , add a field (instance var.) 
+private LocalDate lastSubscriptionPaidDate;
+Option : Pay Subscription
+It should update the date.
+
+Question : How will you delete the customer details , who have not paid the subscription(reg amount) for more than last 3  months ?
+Discuss here n solve as lab work.
+
+---------------------Revision over -----------------------
+
+
+3. LinkedList
+Refer to : Collection Framework Overview diagram.
+diagrams : Types of linked lists , node , insert n delete operations
+Refer to readme
+Solve ready code samples.
+Compare ArrayList Vs LinkedList
+
+
+4. Enter Sets
+HashSet , LinkedHashSet , TreeSet
+
+5. Hashing Algorithm
+
+6. Enter Maps
+Map overview
+
+Example of strings having same hashcode
+Aa BB
+Ba CB 
+Ca DB
+Da EB
+BBBB AaBB AaAa BBAa
+FB Ea
+
+

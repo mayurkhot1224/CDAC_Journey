@@ -1,0 +1,215 @@
+Revise 
+Functional programming  by solving below requirements
+
+1. Write a tester to print average of  gpa of students(map) for the specified subject
+eg : i/p : subject
+Hint : map --> Collection -- Stream --filter --mapToDouble --isPresent --getAsDouble
+eg : Subject chosenSubject=Subject.valueOf(...);
+OptionalDouble optional=studentMap.values() //Collection<Student>
+  .stream() //Stream<Student>
+  .filter(s -> s.getSubject()==chosenSubject)//CAN'T be replaced by method ref. Stream<Student> : filtered
+  .mapToDouble(Student::getGPA)//s -> s.getGPA() : DoubleStream
+  .average();
+if(optional.isPresent()
+ sop("Avg"+optional.getAsDouble());
+OR
+
+double avg=studentMap.values() //Collection<Student>
+  .stream() //Stream<Student>
+  .filter(s -> s.getSubject()==chosenSubject)//CAN'T be replaced by method ref. Stream<Student> : filtered
+  .mapToDouble(Student::getGPA)//s -> s.getGPA() : DoubleStream
+  .average()
+.orElseThrow();//rets either avg value or throws NoSuchElemExc. 
+
+
+
+
+
+
+
+
+
+
+
+2 Print name of specified subject  topper
+Given : student details are stored in the map
+eg : 
+Subject subject=Subject. valueOf(sc.next().toUpperCase());
+sop("Name of the topped in subject "+subject+" "+studentMap.values()
+.stream()
+.filter(s -> s.getSubject()==subject) 
+.max((s1,s2) -> ((Double)s1.getGPA()).compareTo(s2.getGPA())
+.orElseThrow().getName());
+
+
+2.1 Display all student details , from a list
+eg : studentList.forEach(s -> sop(s));// System.out::println
+
+
+3 Print no of  failures for the specified subject chosen  from user.
+(gpa < 5 : failed case)
+
+
+4 Print no of  failures for the specified subject chosen  from user n their names
+(gpa < 5 : failed case)
+
+
+5. Accept product category from user
+Remove all products from specified category n display remaining list 
+Can we use functional stream API to add / remove elements from the collection ?
+
+
+6. Method Reference / Constructor reference
+
+
+Revise  I/O
+
+The packages used for handling devices in Java : java.io, java.nio
+
+java.io : In case of errs ---java.io.IOException
+
+read/write methods :blocking or non blocking ? : blocking API
+
+Java 8 Streams(Func. streams ) : represents pipeline of big data ops(aggregate ops) to be perfromed on seq. of elems derived from : arrays / collection /file....
+eg : java.util.stream.Stream<T>,IntStream,LongStream,DoubleStream
+
+eg of higher order funs : intermediate ops --filter,map,mapToDouble,sorted,flatMap
+
+forEach,collect,count,sum,average : terminal ops
+
+eg : empList.stream().filter(e.getDept() == dept) .count() --> no of emps from a specific dept
+
+
+I/O Stream -- represent data transfer (bytes/chars) from/to java app to/from device(eg : file , pipe,socket,memory,console...)
+For  reading data from data src into java  app : input stream
+For  writing data to data sink from java  app :output stream
+
+java.io --2 types of strms
+1. Binary strms
+2. char strms
+
+ 4 abstract super classes in I/O hierarchy :  InputStream,OutputStream,Reader,Writer
+
+Node streams : device handling strms , which will abstract(hide) the actual handling of the devices from java prog.
+
+
+File Handling strms : FIS,FOS,FR,FW
+Buffering strms : BIS,BOS,BR,BW(PW)
+
+
+Objective : copy text files using buffersFirst use imperative approach
+
+Use FP approach
+
+1. Read from src file ,  those lines having length > 50 --upper case contents--store it in a dest file
+eg : br.lines()
+.filter(line -> line.length()> 50)
+.map(line -> line.toUpperCase()) // String ::toUpperCase
+.forEach(pw::println);// line -> pw.println(line)
+
+
+
+
+2. Suppose you have product details in a map. Can you store these details sorted as per price in a text file , in a buffered manner ?
+eg : try(sc,PW pw=new PW(new FW(sc.nextLine()))
+{
+   productMap.values()
+   stream()
+   .sorted((p1,p2) -> ......) //sorted Stream<Product>
+   .forEach(pw::println);
+}
+
+
+
+
+3. Advanced Objective (involves collection frmwork n text file handling) 
+You can try it later.
+emps.data : text file
+id fname lname dept salry designation 
+100 a b  rnd 34567 sd
+.......
+
+Q : Print the name of emp earning max salary from sepcified dept
+
+------------------------------------------
+
+2. Enter Binary file handling streams 
+
+2.1 Node streams -- FileInputStream , FOS
+2.2 Buffering of bin data : BIS , BOS
+
+2.3 Integration of Collection + I/O
+Store n later restore the products from bin file
+
+
+Objective : Store product details in raw(binary) format
+Java App ---> BOS--->FOS--->Bin File
+The methods to write data to BOS : write(int) ,write(byte[]) , write(byte[] , int offset, int len)
+Who will have to do the conversion from primitive data types , string, date ,enums ---> binary ? prog !
+Extremely tedious !
+Instead use , readymade conversion streams
+
+For data write operation
+Java App --->DOS---> BOS--->FOS--->Bin File
+eg : try(DOS out=new DOS(new BOS(new FOS(fileName))))
+{
+   map.forEach((k,v) -> {
+    //v : product
+    //product id : 
+      out.writeInt(v.getId()); ........
+   });
+}
+
+For Data Read operation
+
+Java App<---DIS<-----BIS<-----FIS<----- Bin File
+try(DIS in=new DIS(new BIS(new FIS(fileName))))
+{// create empty map
+HM<Integer,Product> hm=new HM<>();
+   while(true)
+   {
+//int productId, String name, String desc, int quantity, double price, Category //productCategory,LocalDate manufactureDate
+      Product p=new Product(in.readInt(),.......);
+      map.put(p.getId(),p);
+   }
+}
+
+In above approach , prog STILL has to concert prim types n strings ---> bin n restore the same.
+
+Enter : 
+MOST advanced I/O streams : Object streams (serialization n de-serialization)
+
+Classes involved 
+java.io.ObjectOutputStream : conversion stream
+Performs serialization=Conversion from object ---> binary stream
+Object : state , behavior
+ONLY state of the object is converted in to bin form (+some meta data info)
+state : non static n non transient data members.
+
+For de0serialization
+java.io.ObjectInputStream : conversion stream
+Performs de-serialization=Conversion from binary stream---> object
+Pre requisites :
+1. state : available from bin file
+2. classes(.class files) to load java classes in method area.
+(Refer : day10_data\day10_help\IO\IO handling\serialization_in_detail.txt) for complete details.
+
+Steps
+1. Get populated Map of products --store these details in a bin file , using bin streams
+
+1.1 Core classes  : Product , Category 
+
+1.2 custom exc
+
+1.3 ShopUtils --collection utils --
+populate list
+populate map
+
+
+1.4 IOUtils -- i/f
+add a static method --to store the  products in a bin file
+
+1.5 Tester : StoreProductDetails --
+Accept name of file from user n call our own API
+
+2. Restore the product details from a bin file ---> Java App (map)

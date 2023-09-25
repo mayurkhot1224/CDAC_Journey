@@ -1,0 +1,168 @@
+Revise 
+Functional programming  by solving below requirements
+
+1.
+Display all customer names  from customer list
+customerList.forEach(cust -> sop(cust.getName());
+
+
+2. 
+Remove all the products of a specific category
+eg : Category cat=Category.valueOf(sc.next().toUpperCase());
+productList.removeIf(p -> p.getCategory()==cat);
+
+3.
+Display all products (from a product map)
+Ans this 
+Is Map Iterable ? NO
+Can u attach DIRECTLY a for-each loop to the map ? NO
+Imperative soln : 
+for(Product p : map.values())
+ sop(p);
+OR
+FP
+map.forEach((k,v) -> sop(v));
+4. Remove all products(map) manufactured before a specific date
+eg : LocalDate date=LocalDate.parse(sc.next());
+map.values() //Collection<Product>
+.removeIf(p -> p.getDate().isBefore(date));
+map.forEach((k,v) -> sop(v));
+
+5. Sort the products in the list as per date : custom ordering
+eg : Collections.sort(list,new Comparator<Product>() {
+  public int compare(Product p1,Product p2)
+  {
+     return p1.getDate().compareTo(p2.getDate());
+  }
+});
+OR
+Collections.sort(list,(p1,p2) -> p1.getDate().compareTo(p2.getDate()));
+
+
+
+6. Use Function literal
+
+
+7.
+
+ Using above API(higher order funcs) , can you chain multiple operations like sorting & displaying the sorted data ? 
+ NO!
+
+
+OR
+Filter the elements n display filtered list. 
+
+
+Objective : Accept product category from user
+remove all products from specified category n display remaining list : multiple ops can't be chained n it will modify the original List !
+
+
+Better Solution : 
+8. Enter Java 8 Streams (Functional Streams)
+Why : Without using Func streams , you can not easily chain multiple operations (eg : filter , map , reduce, sorting , display....)
+
+
+
+8.1 Refer to diagrams from : streams\diagrams
+collections vs streams n streams basics
+8.2 Refer to 
+streams\readme_streams.txt
+
+eg : 
+
+  int sum = widgets.stream()
+                      .filter(w -> w.getColor() == RED)
+                      .mapToInt(w -> w.getWeight())
+                      .sum();
+---------------------------------------------------------------------------
+Enter I/O
+
+The packages used for handling devices in Java : java.io, java.nio
+
+java.io : In case of errs ---java.io.IOException
+
+read/write methods :blocking or non blocking ? : blocking API
+
+Java 8 Streams(Func. streams ) : represents pipeline of big data ops(aggregate ops) to be perfromed on seq. of elems derived from : arrays / collection /file....
+eg : java.util.stream.Stream<T>,IntStream,LongStream,DoubleStream
+
+eg of higher order funs : intermediate ops --filter,map,mapToDouble,sorted,flatMap
+
+forEach,collect,count,sum,average : terminal ops
+
+eg : empList.stream().filter(e.getDept() == dept) .count() --> no of emps from a specific dept
+
+
+I/O Stream -- represent data transfer (bytes/chars) from/to java app to/from device(eg : file , pipe,socket,memory,console...)
+For  reading data from data src into java  app : input stream
+For  writing data to data sink from java  app :output stream
+
+java.io --2 types of strms
+1. Binary strms
+2. char strms
+
+ 4 abstract super classes in I/O hierarchy :  InputStream,OutputStream,Reader,Writer
+
+Node streams : device handling strms , which will abstract(hide) the actual handling of the devices from java prog.
+
+
+File Handling strms : FIS,FOS,FR,FW
+Buffering strms : BIS,BOS,BR,BW(PW)
+
+--------------------------Pending ---------------------------------
+Objective : copy text files using buffers
+
+First use imperative approach
+
+Use FP approach
+
+1. Read from src file ,  those lines having length > 50 --upper case contents--store it in a dest file
+
+2. Suppose you have product details in a map. Can you store these details sorted as per price in a text file , in a buffered manner ?
+
+3. Advanced Objective (involves collection frmwork n text file handling) 
+You can try it later.
+emps.data : text file
+id fname lname dept salry designation 
+100 a b  rnd 34567 sd
+.......
+
+Q : Print the name of emp earning max salary from sepcified dept
+
+
+
+2. Enter Binary file handling streams 
+
+2.1 Node streams -- FileInputStream , FOS
+2.2 Buffering of bin data : BIS , BOS
+
+2.3 Integration of Collection + I/O
+Store n later restore the products from bin file
+
+Steps
+1. Get populated Map of products --store these details in a bin file , using bin streams
+
+1.1 Core classes  : Product , Category 
+
+1.2 custom exc
+
+1.3 ShopUtils --collection utils --
+populate list
+populate map
+
+
+1.4 IOUtils -- i/f
+add a static method --to store the  products in a bin file
+
+1.5 Tester : StoreProductDetails --
+Accept name of file from user n call our own API
+
+2. Restore the product details from a bin file ---> Java App (List)
+
+
+
+
+Excellent You Tube channels for Functional programming in Java 
+java brains  
+javatechie 
+telusko
