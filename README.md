@@ -1,2 +1,2 @@
 # CDAC_Journey
-Just Daily Practise During CDac Course.
+Daily Practise During CDac Course.
